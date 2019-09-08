@@ -6,13 +6,13 @@ class AdminController < ApplicationController
 
     def parsing(lawyers)
         document = Nokogiri::HTML(lawyers)
-        @job = document.search('h4 span[class^="label label"]')[0].text
-        @nume = document.search('.col-md-12 h4 [style="font-weight:bold;"]')[0].text
-        #barou = document.search('.col-md-12 [class="text-nowrap"]')[0].text
-        @stare = document.search('h4 span[style^="color:"]')[0].text
-        #adress = document.search('.col-md-12 [class="fas fa-map-marker text-red padding-right-sm"]')[0].text
-        @phone = document.search('.col-md-12 [class="padding-right-md text-primary"]')[0].text
-        @mail = document.search('.col-md-12 [class="text-nowrap"]')[0].text
+        @job = document.search('h4 span[class^="label label"]')[1].text
+        @nume = document.search('.col-md-12 h4 [style="font-weight:bold;"]')[1].text
+        #barou = document.search('.col-md-12 [class="text-nowrap"]')[1].text
+        @stare = document.search('h4 span[style^="color:"]')[1].text
+        #adress = document.search('.col-md-12 [class="fas fa-map-marker text-red padding-right-sm"]')[1].text
+        @phone = document.search('.col-md-12 [class="padding-right-md text-primary"]')[1].text
+        @mail = document.search('.col-md-12 [class="text-nowrap"]')[1].text
         puts @job
         puts @nume
         puts @stare
@@ -39,7 +39,7 @@ class AdminController < ApplicationController
             if command.success?
                 lawyers = command.result 
                 parsing(lawyers)
-                redirect_to(search_path)
+                
             else
                 puts command.errors[:fetch_lawyers]
             end
