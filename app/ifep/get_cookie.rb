@@ -15,9 +15,7 @@ module Ifep
             http.use_ssl = true
             resp = http.request_get(uri.path, @headers)
             status = resp.code
-            puts status
             return resp['set-cookie'] if status == "200" 
-
             errors.add(:fetch_cookie,  error_message(resp))
             nil            
         end
