@@ -1,6 +1,7 @@
 <h1>Search Page</h1>
 <%= form_tag "/search" do %>
-  <%= text_field_tag :term %>
+  <%= text_field_tag :term , nil, placeholder: 'Name' %>
+  <%= text_field_tag :UUID , nil, placeholder: @UUID , disabled: true, size: 34 %>
  <%= submit_tag "Search" %>
 <% end %>
 <!--%= button_to 'Search', action: "search" %-->

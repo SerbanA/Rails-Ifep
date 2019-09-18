@@ -1,5 +1,11 @@
 class AdminController < ApplicationController
-    #reg = (?<=tbSearch=)\w+(?=\&) regular expression for search term
+    before_action :get_uuid
+
+    def get_uuid
+        puts params[:UUID] = SecureRandom.uuid
+        @UUID = params[:UUID]
+    end
+
     def updating_cookie(cookie, sheaders)
         headers['cookie'] = cookie
         @cookie = cookie
@@ -29,7 +35,6 @@ class AdminController < ApplicationController
         term = params[:term]
         body = body.gsub(/(?<=tbSearch=)\w+(?=\&)/,term)
         @body = body
-        @UUID = SecureRandom.uuid
         command = Ifep::ObtainCookie.call(@headers)
         if command.success?  
             cookie = command.result 
