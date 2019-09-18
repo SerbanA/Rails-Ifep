@@ -1,2 +1,6 @@
 <h1>Search Page</h1>
-<%= button_to 'Search', action: "search" %>
+<%= form_tag "/search" do %>
+  <%= text_field_tag :term %>
+ <%= submit_tag "Search" %>
+<% end %>
+<!--%= button_to 'Search', action: "search" %-->
