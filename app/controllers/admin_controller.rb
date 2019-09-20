@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-    #before_action :generate_uuid
+    before_action :generate_uuid
 
     def generate_uuid
         if @UUID == nil
@@ -30,12 +30,12 @@ class AdminController < ApplicationController
         p @mail.length
     end
 
-    def is_valid
-        p "Lawyer IS Validated."
-    end
-
-    def not_valid
-        p "Lawyer is NOT Validated."
+    def validation
+        if params[:commit] == "OK"
+            p "Lawyer OK"
+        elsif params[:commit] == "NOT-OK"
+            p "Lawyer NOT-OK"
+        end
     end
 
     def search

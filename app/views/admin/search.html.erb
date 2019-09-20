@@ -1,12 +1,10 @@
-<%= form_tag do %>
+<%= form_tag "/validation" do %>
     <p>UUID:<%= text_field_tag '', @UUID, size: 36, disabled: true %></p>
     <p>Job:<%= text_field_tag '', @job, size: 36,disabled: true %></p>
     <p>Name:<%= text_field_tag '', @nume, size: 36, disabled: true %></p>
     <p>State:<%= text_field_tag '', @stare, size: 36, disabled: true %></p>
     <p>Phone:<%= text_field_tag '', @phone, size: 36, disabled: true %></p>
     <p>Email:<%= text_field_tag '', @mail, size: 36, disabled: true %></p>
-    <!--%= submit_tag "", :value => "OK", :name => "ok"%-->
-    <!--%= submit_tag "", :value => "NOT-OK", :name => "not_ok"%-->
-    <%= button_to 'Valid', action: "is_valid" %>
-    <%= button_to 'Not Valid', action: "not_valid" %>
+    <%= submit_tag "OK" %>
+    <%= submit_tag "NOT-OK" %>
 <% end %>

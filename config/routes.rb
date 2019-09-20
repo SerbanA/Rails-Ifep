@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   root 'admin#verifylawyer' 
   get 'admin/verifylawyer' => 'admin#verifylawyers'
   post 'search', to: 'admin#search', as: 'admin/search'
+  post 'validation', to: 'admin#validation', as: 'admin/validation'
 
-  post 'is_valid', to: 'admin#is_valid', as: 'admin/is_valid'
-  post 'not_valid', to: 'admin#not_valid', as: 'admin/not_valid'
   resources :job, :name, :state, :phone, :email
  
 
