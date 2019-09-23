@@ -15,32 +15,34 @@ class AdminController < ApplicationController
         @cookie = cookie
     end
 
-    def parsing(lawyers)
-        document = Nokogiri::HTML(lawyers)
-        count = document.search('.col-md-12 h4').count
-        p count
-        @job = document.search('h4 span[class^="label label"]')[0].text
-        @nume = document.search('.col-md-12 h4 [style="font-weight:bold;"]')[0].text
-        #barou = document.search('.col-md-12 [class="text-nowrap"]')[1].text
-        @stare = document.search('h4 span[style^="color:"]')[0].text
-        #adress = document.search('.col-md-12 [class="fas fa-map-marker text-red padding-right-sm"]')[1].text
-        @phone = document.search('.col-md-12 [class="padding-right-md text-primary"]')[0].text
-        @mail = document.search('.col-md-12 [class="text-nowrap"]')[0].text
-        p @mail.class
-        p @mail.length
+    def parsing(raw_data)
+        document = Nokogiri::HTML(raw_data)
+        count = document.search('.col-md-12').count
+        #send_data( holder, :filename => 'doc.txt')
+        for i in 0..count-1 do
+            chunk = document.search('.col-md-12')[i]
+            extract_info(chunk)
+        end
+    end 
+
+    def extract_info(chunk)
+        @job = chunk.search('h4 span[class^="label label"]').text
+        @nume = chunk.search('h4 [style="font-weight:bold;"]').text
+        @stare = chunk.search('h4 span[style^="color:"]').text
+        @phone = chunk.search('[class="padding-right-md text-primary"]').text
+        @mail = chunk.search('[class="text-nowrap"]').text
     end
 
     def validation
         if params[:commit] == "OK"
-            p "Lawyer OK"
+            p "This lawyer's data is OK and will be submitted to /api/lawyer/#{@UUID}/verify/#{params[:commit]}"
         elsif params[:commit] == "NOT-OK"
-            p "Lawyer NOT-OK"
+            p "This lawyer's data is NOT- OK and will be submitted to /api/lawyer/#{@UUID}/verify/#{params[:commit]}"
         end
     end
 
     def search
         load 'app/ifep.rb'
-        generate_uuid
         @headers = { 
             "User-Agent" => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0',
             "X-MicrosoftAjax" => 'Delta=true',
@@ -57,8 +59,8 @@ class AdminController < ApplicationController
             puts "COMMENCING DATA FETCHING"
             command = Ifep::Lawyers.call(@headers, @body)
             if command.success?
-                lawyers = command.result 
-                parsing(lawyers)
+                raw_data = command.result 
+                parsing(raw_data)
             else
                 puts command.errors[:fetch_lawyers]
             end
