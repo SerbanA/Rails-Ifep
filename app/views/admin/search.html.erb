@@ -1,10 +1,12 @@
-<%= form_tag "/validation" do %>
-    <p>UUID:<%= text_field_tag '', @UUID, size: 36, disabled: true %></p>
-    <p>Job:<%= text_field_tag '', @job, size: 36,disabled: true %></p>
-    <p>Name:<%= text_field_tag '', @nume, size: 36, disabled: true %></p>
-    <p>State:<%= text_field_tag '', @stare, size: 36, disabled: true %></p>
-    <p>Phone:<%= text_field_tag '', @phone, size: 36, disabled: true %></p>
-    <p>Email:<%= text_field_tag '', @mail, size: 36, disabled: true %></p>
-    <%= submit_tag "OK" %>
-    <%= submit_tag "NOT-OK" %>
+<% @lawyer.each do |f| %>
+    <%= form_tag "/validation" do %>
+        <p>UUID:<%= text_field_tag '', @UUID, size: 36, disabled: true %></p>
+        <p>Job:<%= text_field_tag '', f.job, size: 36,disabled: true %></p>
+        <p>Name:<%= text_field_tag '', f.name, size: 36, disabled: true %></p>
+        <p>State:<%= text_field_tag '', f.state, size: 36, disabled: true %></p>
+        <p>Phone:<%= text_field_tag '', f.phone, size: 36, disabled: true %></p>
+        <p>Email:<%= text_field_tag '', f.mail, size: 36, disabled: true %></p>
+        <%= submit_tag "OK" %>
+        <%= submit_tag "NOT-OK" %>
+    <% end %>
 <% end %>

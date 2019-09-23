@@ -18,26 +18,28 @@ class AdminController < ApplicationController
     def parsing(raw_data)
         document = Nokogiri::HTML(raw_data)
         count = document.search('.col-md-12').count
+        @lawyer = []
         #send_data( holder, :filename => 'doc.txt')
         for i in 0..count-1 do
             chunk = document.search('.col-md-12')[i]
-            extract_info(chunk)
+            @lawyer[i] = extract_info(chunk)
+            p @lawyer[i]
         end
     end 
 
     def extract_info(chunk)
-        @job = chunk.search('h4 span[class^="label label"]').text
-        @nume = chunk.search('h4 [style="font-weight:bold;"]').text
-        @stare = chunk.search('h4 span[style^="color:"]').text
-        @phone = chunk.search('[class="padding-right-md text-primary"]').text
-        @mail = chunk.search('[class="text-nowrap"]').text
+        person = OpenStruct.new(:job => chunk.search('h4 span[class^="label label"]').text,
+        :name => chunk.search('h4 [style="font-weight:bold;"]').text,
+        :state => chunk.search('h4 span[style^="color:"]').text,
+        :phone => chunk.search('[class="padding-right-md text-primary"]').text,
+        :mail => chunk.search('[class="text-nowrap"]').text)
     end
 
     def validation
         if params[:commit] == "OK"
             p "This lawyer's data is OK and will be submitted to /api/lawyer/#{@UUID}/verify/#{params[:commit]}"
         elsif params[:commit] == "NOT-OK"
-            p "This lawyer's data is NOT- OK and will be submitted to /api/lawyer/#{@UUID}/verify/#{params[:commit]}"
+            p "This lawyer's data is NOT-OK and will be submitted to /api/lawyer/#{@UUID}/verify/#{params[:commit]}"
         end
     end
 
