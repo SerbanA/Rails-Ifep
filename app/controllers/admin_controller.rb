@@ -23,7 +23,6 @@ class AdminController < ApplicationController
         for i in 0..count-1 do
             chunk = document.search('.col-md-12')[i]
             @lawyer[i] = extract_info(chunk)
-            p @lawyer[i]
         end
     end 
 
