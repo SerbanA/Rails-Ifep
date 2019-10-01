@@ -6,6 +6,7 @@ require_relative 'Filters'
 module Ifep
     class ObtainCookie
         prepend SimpleCommand
+
         def initialize(headers)
             @headers = headers
         end

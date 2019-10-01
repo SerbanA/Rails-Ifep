@@ -4,7 +4,7 @@ require 'simple_command'
 require_relative 'Filters'
 
 module Ifep
-    class Lawyers
+    class LawyerPanel
         prepend SimpleCommand
 
         def initialize(headers,body)
