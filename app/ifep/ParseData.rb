@@ -11,13 +11,14 @@ module Ifep
         end
 
         def call
-            document = Nokogiri::HTML(raw_data)
+            document = Nokogiri::HTML(@raw_data)
             count = document.search('.col-md-12').count
             lawyer = []
             for i in 0..count-1 do
                 chunk = document.search('.col-md-12')[i]
                 lawyer[i] = extract_info(chunk)
             end
+            return lawyer
         end
 
         def extract_info(chunk)

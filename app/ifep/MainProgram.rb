@@ -14,19 +14,17 @@ module Ifep
             if command.success?  
                 p "Obtained cookie"
                 cookie = command.result 
-                command = Ifep::UpdateCookie.call(@cookie, @headers)
+                command = Ifep::UpdateCookie.call(cookie, @headers)
                 puts "Updating Cookie"
                 if command.success?
                     p "Updated Cookie"  
                     name= params[:term]
                     command = Ifep::SearchTerm.call(@body, name)
+                    @body = command.result
                     command = Ifep::LawyerPanel.call(@headers, @body)
                     if command.success?
                         raw_data = command.result 
                         command = Ifep::ParseData.call(raw_data)
-                        if command.success?
-                            chunk = command.result
-                            command = Ifep::ExtractData(chunk)
                     else
                         puts command.errors[:fetch_lawyers]
                     end

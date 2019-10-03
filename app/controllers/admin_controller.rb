@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
+    include Ifep
     def search
-        load 'app/ifep.rb'
+        command = Ifep::MainProgram.call(Ifep::Variables.headers, Ifep::Variables.body)
     end
-
-    
+  
 end
