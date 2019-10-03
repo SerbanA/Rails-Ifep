@@ -1,6 +1,6 @@
 require 'simple_command'
 require 'nokogiri'
-require 'Filters'
+require 'filters'
 
 module Ifep
     class ParseData

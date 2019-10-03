@@ -1,4 +1,4 @@
-require_relative 'Filters'
+require_relative 'filters'
 module Ifep
     class MainProgram
         prepend SimpleCommand
@@ -9,22 +9,18 @@ module Ifep
         end
 
         def call
-            command = Ifep::ObtainCookie.call(@headers)
-            p "Obtaining cookie"
+            command = ObtainCookie.call(@headers)
             if command.success?  
-                p "Obtained cookie"
                 cookie = command.result 
-                command = Ifep::UpdateCookie.call(cookie, @headers)
-                puts "Updating Cookie"
-                if command.success?
-                    p "Updated Cookie"  
+                Ifep::update_cookie(cookie, @headers)
+                if command.success?  
                     name= params[:term]
-                    command = Ifep::SearchTerm.call(@body, name)
+                    command = SearchTerm.call(@body, name)
                     @body = command.result
-                    command = Ifep::LawyerPanel.call(@headers, @body)
+                    command = LawyerPanel.call(@headers, @body)
                     if command.success?
                         raw_data = command.result 
-                        command = Ifep::ParseData.call(raw_data)
+                        command = ParseData.call(raw_data)
                     else
                         puts command.errors[:fetch_lawyers]
                     end
@@ -33,3 +29,6 @@ module Ifep
                 puts command.errors[:fetch_cookie]
             end
         end
+
+    end
+end

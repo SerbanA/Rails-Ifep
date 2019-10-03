@@ -1,7 +1,7 @@
 require 'uri'
 require 'net/http'
 require 'simple_command'
-require_relative 'Filters'
+require_relative 'filters'
 
 module Ifep
     class LawyerPanel
@@ -21,6 +21,7 @@ module Ifep
             return response.body if "200" == status
             errors.add(:fetch_lawyers, error_message(response)) if status != "200"
         end
+        
         def error_message(response)
             "Error when fetching lawyers list.#{response.code}:#{JSON.parse(response.body)["Message"]}" 
         end

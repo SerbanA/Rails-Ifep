@@ -1,7 +1,7 @@
 require 'uri'
 require 'net/http'
 require 'simple_command'
-require_relative 'Filters'
+require_relative 'filters'
 
 module Ifep
     class ObtainCookie

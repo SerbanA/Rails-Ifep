@@ -1,8 +1,8 @@
 require 'simple_command'
-require_relative 'Filters'
+require_relative 'filters'
  
 module Ifep
-    def SearchTerm 
+    def search_term 
        @body = body.gsub(/(?<=tbSearch=)\w+(?=\&)/, name)
     end
 end
