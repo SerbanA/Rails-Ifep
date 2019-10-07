@@ -1,5 +1,5 @@
 <% @lawyer.each do |f| %>
-    <%= form_tag "app/ifep/ValidateLawyer" do %>
+    <%= form_tag "/validate_lawyer" do %>
         <p>UUID:<%= text_field_tag 'uuid', @UUID, size: 36, disabled: true %></p>
         <p>Job:<%= text_field_tag 'job', f.job, size: 36,disabled: true %></p>
         <p>Name:<%= text_field_tag 'name', f.name, size: 36, disabled: true %></p>

@@ -3,10 +3,10 @@ module Ifep
     class MainProgram
         prepend SimpleCommand
         
-        def initialize(headers, body, params)
+        def initialize(headers,body,name)
             @headers = headers
             @body = body
-            @params = params
+            @name = name
         end
 
         def call
@@ -14,25 +14,23 @@ module Ifep
             if command.success?  
                 cookie = command.result 
                 update_headers_with_cookie(cookie)
-                if command.success?  
-                    name = @params[:term]
-                    p name.class
-                    p @params[:term].class
-                    modify_search_term(name)
-                    @body = command.result
-                    command = LawyerPanel.call(@headers, @body)
-                    if command.success?
-                        raw_data = command.result 
-                        command = ParseData.call(raw_data)
-                    else
-                        puts command.errors[:fetch_lawyers]
+                    if command.success? 
+                        modify_search_term(@name)
+                        command = LawyerPanel.call(@headers, @body)
+                        if command.success?
+                            raw_data = command.result 
+                            command = ParseData.call(raw_data)
+                            lawyer =  command.result
+                            return lawyer
+                        else
+                            puts command.errors[:fetch_lawyers]
+                        end
                     end
-                end
             else
                 puts command.errors[:fetch_cookie]
             end
         end
-        
+      
         private
         def update_headers_with_cookie(cookie)
             @headers['cookie'] = cookie
