@@ -3,10 +3,10 @@ module Ifep
     class MainProgram
         prepend SimpleCommand
         
-        def initialize(headers,body,name)
+        def initialize(headers,body,search_value)
             @headers = headers
             @body = body
-            @name = name
+            @search_value = search_value
         end
 
         def call
@@ -15,7 +15,7 @@ module Ifep
                 cookie = command.result 
                 update_headers_with_cookie(cookie)
                     if command.success? 
-                        modify_search_term(@name)
+                        modify_search_term(@search_value)
                         command = LawyerPanel.call(@headers, @body)
                         if command.success?
                             raw_data = command.result 
@@ -36,8 +36,12 @@ module Ifep
             @headers['cookie'] = cookie
         end
 
-        def modify_search_term(name)
-            @body = @body.gsub(/(?<=tbSearch=)\w+(?=\&)/, name)
+        def modify_search_term(search_value)
+            @body = @body.gsub(/(?<=tbSearch=)\w+(?=\&)/, search_value)
+        end
+
+        def generate_uuid
+            uuid = SecureRandom.uuid
         end
     end
  
