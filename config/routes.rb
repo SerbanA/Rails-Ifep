@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
   resources :uuid
 
-post "/api/UUID/:uuid/verify/" => "admin#validate_lawyer", as: 'admin_validate_lawyer'
+  post "/api/UUID/:uuid/verify/" => "admin#validate_lawyer", as: 'admin_validate_lawyer'
 
 end

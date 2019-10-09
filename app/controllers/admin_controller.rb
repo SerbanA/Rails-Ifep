@@ -12,11 +12,17 @@ class AdminController < ApplicationController
     end
 
     def validate_lawyer
-        if params[:commit] == "OK"
+        if lawyer_ok?
             p "This lawyer's data is OK and will be submitted to /api/lawyer/#{@UUID}/verify/#{params[:commit]}"
-        elsif params[:commit] == "NOT-OK"
+        else 
             p "This lawyer's data is NOT-OK and will be submitted to /api/lawyer/#{@UUID}/verify/#{params[:commit]}"
         end
     end
     
+    private
+    
+    def lawyer_ok?
+        params[:commit] == "OK"
+    end
+
 end
