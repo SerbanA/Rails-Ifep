@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'admin#verifylawyer' 
-  post 'search', to: 'admin#search'
+  get  "admin/search_page"
+  root 'admin#search_page' 
 
-  resources :uuid
-
-  post "/api/UUID/:uuid/verify/" => "admin#validate_lawyer", as: 'admin_validate_lawyer'
+  resources :uuid,:search_value
+  
+  post "/api/search/UUID/:uuid" => 'admin#search_results',as: 'admin_search_results'
+  post "/api/UUID/:uuid/search_value/:search_value" => "admin#validate_lawyer", as: 'admin_validate_lawyer'
 
 end

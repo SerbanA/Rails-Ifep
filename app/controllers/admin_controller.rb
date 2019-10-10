@@ -6,8 +6,9 @@ class AdminController < ApplicationController
         @UUID = params[:UUID]
     end
   
-    def search 
+    def search_results 
         command = Ifep::MainProgram.call(Ifep::Filters.headers, Ifep::Filters.form["body"], params[:search_value])
+        @search_value = params[:search_value]
         @lawyer = command.result
     end
 
