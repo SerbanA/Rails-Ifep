@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
     def generate_uuid
         params[:UUID] = SecureRandom.uuid
-        @UUID = params[:UUID]
+        @UUID = params[:UUID]   
     end
   
     def search_results 

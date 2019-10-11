@@ -1,6 +1,6 @@
 <h1>Search Page</h1>
 <%= form_tag admin_search_results_path(:uuid => @UUID, :search_value => @search_value), method: :get do %>
-  <%= text_field_tag :search_value  , nil, placeholder: 'Name', :required =>true %>
+  <%= text_field_tag :search_value  , nil, placeholder: 'Name' %>
   <%= text_field_tag :UUID , nil, placeholder: @UUID , size: 34 %>
  <%= submit_tag "Search" %>
 <% end %>
